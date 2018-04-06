@@ -1,0 +1,108 @@
+/**
+ * 
+ * @author Danilo Castilla
+ * @date 10/03/1018
+ * @version 1.0
+ * @description: Implement the concept of linked lists
+ * 
+ */
+
+package Node;//main package
+//Import classes
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import Node.Node_Tree;
+
+public class Tree {//Class List
+	
+	public Node_Tree root = null; //Empty list
+	
+	public boolean isEmpty() {//Method Check if empty
+		
+		return root == null ? true : false;
+		
+	}//end methoh
+	
+	public void insert(Node_Tree newNode){//Method insert at begin of the list
+		
+		if(root == null) {
+			root = newNode;
+		}else {
+			
+			Node_Tree temp = root;
+			Node_Tree parent = root;
+			
+			while(temp != null) {
+				
+				parent = temp;
+				
+				if(temp.Value > newNode.Value) {
+					
+					temp = temp.left;
+					
+				}else{
+					
+					temp = temp.right;
+				}
+				
+			}
+			
+			if(parent.Value < newNode.Value)
+				parent.right = newNode;
+			else 
+				parent.left = newNode;
+		}
+		
+	}//end method
+	
+	public Node_Tree Search(int Value) {//Binary search
+		
+		Node_Tree temp = root;
+		
+		while(temp != null) {
+			
+			if(temp.Value == Value) {
+				break;
+			}
+			if(temp.Value > Value) {
+				
+				temp = temp.left;
+				
+			}else{
+				
+				temp = temp.right;
+			}
+			
+		}
+		return temp;
+	}
+	
+	public void printTree(Node_Tree node) throws IOException {
+		
+		if(node!=null) {
+			System.out.println(node.toString());
+			printTree(node.left);
+			System.out.println("-");
+			printTree(node.right);
+		}
+	}
+		
+
+
+	public static void main(String[] args) throws IOException{//Main method
+		
+		Tree tree = new Tree();//creation object
+		tree.insert(new Node_Tree(45));
+		tree.insert(new Node_Tree(4));
+		tree.insert(new Node_Tree(5));
+		tree.insert(new Node_Tree(80));
+		tree.insert(new Node_Tree(20));
+		tree.insert(new Node_Tree(47));
+		tree.insert(new Node_Tree(12));
+		
+		tree.printTree(tree.root);
+		
+	}//end main method
+	
+}//end class
