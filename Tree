@@ -1,3 +1,5 @@
+package Binary_Tree;
+
 /**
  * 
  * @author Danilo Castilla
@@ -6,23 +8,19 @@
  * @description: Implement the concept of linked lists
  * 
  */
-
-package Node;//main package
-//Import classes
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import Node.Node_Tree;
 
 public class Tree {//Class List
 	
-	public Node_Tree root = null; //Empty list
+	public static Node_Tree root = null; //Empty list
 	
 	public boolean isEmpty() {//Method Check if empty
 		
 		return root == null ? true : false;
 		
-	}//end methoh
+	}//end method
 	
 	public void insert(Node_Tree newNode){//Method insert at begin of the list
 		
@@ -87,6 +85,42 @@ public class Tree {//Class List
 			printTree(node.right);
 		}
 	}
+	
+	public void inOrden(Node_Tree root) {
+		
+		if(root != null) {
+			
+			inOrden(root.left);
+			System.out.println(root.Value);
+			inOrden(root.right);
+			
+		}
+		
+	}
+	
+	public void postOrden(Node_Tree root) {
+		
+		if(root != null) {
+			
+			inOrden(root.left);
+			inOrden(root.right);
+			System.out.println(root.Value);
+			
+		}
+		
+	}
+	
+	public void preOrden(Node_Tree root) {
+		
+		if(root != null) {
+			
+			System.out.println(root.Value);
+			inOrden(root.left);
+			inOrden(root.right);
+			
+		}
+		
+	}
 		
 
 
@@ -100,6 +134,7 @@ public class Tree {//Class List
 		tree.insert(new Node_Tree(20));
 		tree.insert(new Node_Tree(47));
 		tree.insert(new Node_Tree(12));
+		tree.inOrden(root);
 		
 		tree.printTree(tree.root);
 		
