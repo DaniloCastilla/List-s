@@ -1,4 +1,4 @@
-package Tree;
+package Binary_Tree;
 
 /**
  * 
@@ -69,6 +69,7 @@ public class Tree {//Class List
 			if(temp.Value == Value) {
 				break;
 			}
+			
 			if(temp.Value > Value) {
 				
 				temp = temp.left;
@@ -134,7 +135,33 @@ public class Tree {//Class List
 	}
 	
 	public boolean oneChild(Node_Tree node) {
-		return (node.left != null && node.right != null) ? true : false;
+		return (node.left != null && node.right != null) ? false : true;
+	}
+	
+	public Node_Tree getNodeReplace(Node_Tree node) {
+		
+		Node_Tree replaceParent = node;
+		Node_Tree replace = node;
+		Node_Tree temp = node.right;
+		
+		while(temp!=null) {
+			
+			replaceParent = replace;
+			replace = temp;
+			temp = temp.left;
+			
+		}
+		
+		if(replace != node.right) {
+			
+			replaceParent.left = replace.right;
+			replace.right = node.right;
+			
+		}
+			
+		System.out.println("El nodo Reemplazo es " + replace);
+		return replace;
+		
 	}
 	
 	public void delete(int value) {
@@ -163,6 +190,7 @@ public class Tree {//Class List
 		
 		if(temp==null) {
 			System.out.println("No existe el nodo");
+			return;
 		}
 		
 		if(isLeaf(temp)) {
@@ -173,24 +201,41 @@ public class Tree {//Class List
 			else 
 				parent.right = null;
 			
-			}else {
+			}else{
 				
-				if(oneChild(temp)) {
+				if(oneChild(temp)){
 					
-					if(value < parent.Value)
-						parent.left = temp.left;
-					else 
-						parent.right = temp.right;
-				}else {
+					if( temp.left != null) {
+						
+						if(value < parent.Value)
+							parent.left = temp.left;
+						else
+							parent.right = temp.left;
+						
+					}else {
+						
+						if (value < parent.Value)
+							parent.left = temp.right;
+						else 
+							parent.right = temp .right;
+					}
+
+				}else{
 					
-					if(value < parent.Value)
-						parent.left = temp.right;
-					else 
-						parent.right = temp.right;
+					Node_Tree Replace = getNodeReplace(temp);
 					
+					if(temp == root) {
+						root = Replace;
+					} else if(temp.Value < parent.Value){
+						parent.left = Replace;
+					}else {
+						parent.right = Replace;
+					}
+					
+					Replace.left = temp.left;
 				}
-				
-				temp = null;
+					
+			temp = null;
 			
 		}
 		
@@ -200,24 +245,38 @@ public class Tree {//Class List
 		
 		Tree tree = new Tree();//creation object
 		
-		tree.insert(5);
-		tree.insert(8);
-		tree.insert(6);
-		tree.insert(2);
-		tree.insert(3);
+		tree.insert(50);
+		tree.insert(40);
+		tree.insert(45);
+		tree.insert(35);
+		tree.insert(37);
+		tree.insert(32);
+		tree.insert(47);
+		tree.insert(42);
+		tree.insert(34);
+		tree.insert(30);
+		tree.insert(39);
+		tree.insert(36);
+		tree.insert(44);
+		tree.insert(41);
+		tree.insert(49);
+		tree.insert(46);
 		
 		System.out.println("\ninOrder");
-		tree.inOrder(tree.root);
+		//tree.inOrder(tree.root);
 		
 		System.out.println("\npreOrder");
-		tree.preOrder(tree.root);
+		//tree.preOrder(tree.root);
 		
 		System.out.println("\nposOrder");
-		tree.postOrder(tree.root);
+		//tree.postOrder(tree.root);
+		
+		System.out.println("---------");
 		
 		tree.printTree(tree.root);
 		
-		tree.delete(2);
+		tree.delete(35);
+		tree.delete(45);
 		tree.inOrder(tree.root);
 		
 	}//end main method
